@@ -18,7 +18,7 @@ podTemplate(
 
 		stage('Build image') {
          		container('docker') {
-				docker.build("kvalitetsit/cda-validator-schematron-resource:${scmInfo.GIT_COMMIT}", "./schematron")
+				docker.build("kvalitetsit/medcom-cda-validator-schematron-resource:${scmInfo.GIT_COMMIT}", "./schematron")
 				}
       		}
 	
@@ -26,7 +26,7 @@ podTemplate(
 			container('docker') {
 
 				docker.withRegistry('', 'dockerhub') {
-					def image = docker.image("kvalitetsit/cda-validator-schematron-resource:${scmInfo.GIT_COMMIT}")
+					def image = docker.image("kvalitetsit/medcom-cda-validator-schematron-resource:${scmInfo.GIT_COMMIT}")
 					image.push("${scmInfo.GIT_COMMIT}")
 					if(env.TAG_NAME != null && env.TAG_NAME.matches("^v[0-9]*\\.[0-9]*\\.[0-9]*")) {
 	                		        echo "Tagging version kvalitetsit"
